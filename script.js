@@ -21,17 +21,15 @@ async function recupererPays(code) {
     );
     if (!response.ok) {
       throw new Error(`Statut de reponse : ${response.status}`);
-    } else {
-      const result = await response.json();
-      const pays = {
-        capitale: result.capital,
-        population: result.population,
-        drapeau: result.flag,
-        monnaie: result.currencies[0].symbol,
-      };
-      console.log(pays);
-      return pays;
     }
+    const result = await response.json();
+    const pays = {
+      capitale: result.capital,
+      population: result.population,
+      drapeau: result.flag,
+      monnaie: result.currencies[0].symbol,
+    };
+    return pays;
   } catch (erreur) {
     console.error(erreur.message);
   } finally {
@@ -48,10 +46,10 @@ async function recupererPays(code) {
 // Utilise try / catch / finally. Quelle étape doit toujours avoir lieu, succès ou erreur ?
 async function afficherPays(pays) {
   const ligne = document.createElement("li");
-  ligne.classList.add("chargement");
-  ligne.textContent = `${pays.nom} - chargement...`;
-  listePays.appendChild(ligne);
   try {
+    ligne.classList.add("chargement");
+    ligne.textContent = `${pays.nom} — chargement...`;
+    listePays.appendChild(ligne);
     const paysRecup = await recupererPays(pays.code);
     ligne.classList.remove("chargement");
     ligne.textContent = `${paysRecup.drapeau} ${pays.nom} — ${paysRecup.capitale} · ${paysRecup.population.toLocaleString("fr-FR")} habitants · ${paysRecup.monnaie}`;
@@ -60,11 +58,10 @@ async function afficherPays(pays) {
     ligne.classList.remove("chargement");
     ligne.textContent = `${pays.nom} — pays introuvable`;
   } finally {
-    console.log("Chargement terminé");
+    console.log("pays affiché");
   }
 }
 
-// afficherPays(paysListe[0]);
 // TODO 4 — chargerTout()
 // Vide la liste, désactive le bouton, charge les pays l'un après l'autre
 // (une boucle for...of avec await), puis réactive le bouton, même si un pays a échoué.

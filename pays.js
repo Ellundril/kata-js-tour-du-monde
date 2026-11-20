@@ -6,5 +6,6 @@ const paysListe = [
   { nom: "Japon", code: "JP" },
   { nom: "Brésil", code: "BR" },
   // N'existe pas : l'API répondra par une erreur 404
-  { nom: "Atlantide", code: "AA" }
-]
+  { nom: "Atlantide", code: "AA" },
+  { nom: "Suisse", code: "CH" },
+];
