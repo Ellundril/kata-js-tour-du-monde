@@ -66,6 +66,8 @@ async function afficherPays(pays) {
 
 // afficherPays(paysListe[0]);
 // TODO 4 — chargerTout()
+// Vide la liste, désactive le bouton, charge les pays l'un après l'autre
+// (une boucle for...of avec await), puis réactive le bouton, même si un pays a échoué.
 
 async function chargerTout() {
   listePays.textContent = "";
@@ -76,7 +78,7 @@ async function chargerTout() {
   btnCharger.disabled = false;
 }
 
-// Vide la liste, désactive le bouton, charge les pays l'un après l'autre
-// (une boucle for...of avec await), puis réactive le bouton, même si un pays a échoué.
-
 // Relie le bouton à chargerTout (à écrire une fois le TODO 4 terminé)
+btnCharger.addEventListener("click", () => {
+  chargerTout();
+});
