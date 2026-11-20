@@ -39,7 +39,6 @@ async function recupererPays(code) {
   }
 }
 
-recupererPays("FR");
 // TODO 3 — afficherPays(pays)
 // Fonction async. pays est un objet de paysListe ({ nom, code }).
 // Elle ajoute UNE ligne <li> à la liste, en trois états :
@@ -47,8 +46,25 @@ recupererPays("FR");
 //   2. succès : « 🇯🇵 Japon — Tokyo · 125 836 021 habitants · ¥ », sans la classe "chargement"
 //   3. erreur : « Japon — pays introuvable », avec la classe "erreur", sans "chargement"
 // Utilise try / catch / finally. Quelle étape doit toujours avoir lieu, succès ou erreur ?
-async function afficherPays(pays) {}
+async function afficherPays(pays) {
+  const ligne = document.createElement("li");
+  ligne.classList.add("chargement");
+  ligne.textContent = `${pays.nom} - chargement...`;
+  listePays.appendChild(ligne);
+  try {
+    const paysRecup = await recupererPays(pays.code);
+    ligne.classList.remove("chargement");
+    ligne.textContent = `${paysRecup.drapeau} ${pays.nom} — ${paysRecup.capitale} · ${paysRecup.population.toLocaleString("fr-FR")} habitants · ${paysRecup.monnaie}`;
+  } catch (erreur) {
+    ligne.classList.add("erreur");
+    ligne.classList.remove("chargement");
+    ligne.textContent = `${pays.nom} — pays introuvable`;
+  } finally {
+    console.log("Chargement terminé");
+  }
+}
 
+afficherPays(paysListe[0]);
 // TODO 4 — chargerTout()
 // Vide la liste, désactive le bouton, charge les pays l'un après l'autre
 // (une boucle for...of avec await), puis réactive le bouton, même si un pays a échoué.
