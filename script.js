@@ -77,7 +77,17 @@ async function chargerTout() {
   btnCharger.disabled = false;
 }
 
+async function chargerTout2() {
+  listePays.textContent = "";
+  btnCharger.disabled = true;
+  let promesses = [];
+  for (const pays of paysListe) {
+    promesses.push(afficherPays(pays));
+  }
+  await Promise.all(promesses);
+  btnCharger.disabled = false;
+}
 // Relie le bouton à chargerTout (à écrire une fois le TODO 4 terminé)
 btnCharger.addEventListener("click", () => {
-  chargerTout();
+  chargerTout2();
 });
