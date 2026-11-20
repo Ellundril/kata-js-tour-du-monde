@@ -17,13 +17,14 @@ const btnCharger = document.getElementById("btn-charger");
 async function recupererPays(code) {
   try {
     const response = await fetch(
-      `https://countries.dev/alpha/${code}?fields=capital,population,flag,currencies`,
+      `https://countries.dev/alpha/${code}?fields=capital,population,flag,currencies,region`,
     );
     if (!response.ok) {
       throw new Error(`Statut de reponse : ${response.status}`);
     }
     const result = await response.json();
     const pays = {
+      region: result.region,
       capitale: result.capital,
       population: result.population,
       drapeau: result.flag,
@@ -52,7 +53,7 @@ async function afficherPays(pays) {
     listePays.appendChild(ligne);
     const paysRecup = await recupererPays(pays.code);
     ligne.classList.remove("chargement");
-    ligne.textContent = `${paysRecup.drapeau} ${pays.nom} — ${paysRecup.capitale} · ${paysRecup.population.toLocaleString("fr-FR")} habitants · ${paysRecup.monnaie}`;
+    ligne.textContent = `${paysRecup.drapeau} ${pays.nom} (${paysRecup.region}) — ${paysRecup.capitale} · ${paysRecup.population.toLocaleString("fr-FR")} habitants · ${paysRecup.monnaie}`;
   } catch (erreur) {
     ligne.classList.add("erreur");
     ligne.classList.remove("chargement");
