@@ -64,8 +64,18 @@ async function afficherPays(pays) {
   }
 }
 
-afficherPays(paysListe[0]);
+// afficherPays(paysListe[0]);
 // TODO 4 — chargerTout()
+
+async function chargerTout() {
+  listePays.textContent = "";
+  btnCharger.disabled = true;
+  for (const pays of paysListe) {
+    await afficherPays(pays);
+  }
+  btnCharger.disabled = false;
+}
+
 // Vide la liste, désactive le bouton, charge les pays l'un après l'autre
 // (une boucle for...of avec await), puis réactive le bouton, même si un pays a échoué.
 
