@@ -29,6 +29,7 @@ async function recupererPays(code) {
       population: result.population,
       drapeau: result.flag,
       monnaie: result.currencies[0].symbol,
+      nomMonnaie: result.currencies[0].name,
     };
     return pays;
   } catch (erreur) {
@@ -53,7 +54,7 @@ async function afficherPays(pays) {
     listePays.appendChild(ligne);
     const paysRecup = await recupererPays(pays.code);
     ligne.classList.remove("chargement");
-    ligne.textContent = `${paysRecup.drapeau} ${pays.nom} (${paysRecup.region}) — ${paysRecup.capitale} · ${paysRecup.population.toLocaleString("fr-FR")} habitants · ${paysRecup.monnaie}`;
+    ligne.textContent = `${paysRecup.drapeau} ${pays.nom} (${paysRecup.region}) — ${paysRecup.capitale} · ${paysRecup.population.toLocaleString("fr-FR")} habitants · ${paysRecup.monnaie} : ${paysRecup.nomMonnaie}`;
   } catch (erreur) {
     ligne.classList.add("erreur");
     ligne.classList.remove("chargement");
