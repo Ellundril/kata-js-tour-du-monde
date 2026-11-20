@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le tour du monde</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Le tour du monde</h1>
+    <p class="intro">Drapeau, capitale, population et monnaie, d'après countries.dev.</p>
+
+    <button id="btn-charger" type="button">Faire le tour du monde</button>
+
+    <ul id="liste-pays" aria-live="polite"></ul>
+  </main>
+
+  <!-- pays.js avant script.js : script.js utilise paysListe -->
+  <script src="pays.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
