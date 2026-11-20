@@ -14,8 +14,32 @@ const btnCharger = document.getElementById("btn-charger");
 //   - si la réponse n'est pas ok, lance une erreur (throw new Error(...)) qui contient le statut
 //   - sinon retourne un objet { capitale, population, drapeau, monnaie }
 //     (attention : currencies est un TABLEAU d'objets ; la monnaie, c'est le symbole du premier)
-async function recupererPays(code) {}
+async function recupererPays(code) {
+  try {
+    const response = await fetch(
+      `https://countries.dev/alpha/${code}?fields=capital,population,flag,currencies`,
+    );
+    if (!response.ok) {
+      throw new Error(`Statut de reponse : ${response.status}`);
+    } else {
+      const result = await response.json();
+      const pays = {
+        capitale: result.capital,
+        population: result.population,
+        drapeau: result.flag,
+        monnaie: result.currencies[0].symbol,
+      };
+      console.log(pays);
+      return pays;
+    }
+  } catch (erreur) {
+    console.error(erreur.message);
+  } finally {
+    console.log("Pays récupéré");
+  }
+}
 
+recupererPays("FR");
 // TODO 3 — afficherPays(pays)
 // Fonction async. pays est un objet de paysListe ({ nom, code }).
 // Elle ajoute UNE ligne <li> à la liste, en trois états :
