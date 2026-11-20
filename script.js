@@ -68,15 +68,17 @@ async function afficherPays(pays) {
 // Vide la liste, désactive le bouton, charge les pays l'un après l'autre
 // (une boucle for...of avec await), puis réactive le bouton, même si un pays a échoué.
 
-async function chargerTout() {
+//Première façon avec une boucle
+/* async function chargerTout() {
   listePays.textContent = "";
   btnCharger.disabled = true;
   for (const pays of paysListe) {
     await afficherPays(pays);
   }
   btnCharger.disabled = false;
-}
+} */
 
+//deuxième façon avec Promise.all
 async function chargerTout2() {
   listePays.textContent = "";
   btnCharger.disabled = true;
@@ -91,3 +93,19 @@ async function chargerTout2() {
 btnCharger.addEventListener("click", () => {
   chargerTout2();
 });
+
+// QUESTIONS DE RECUL
+
+// 1. Si je retire await devant fetch le message suivant s'affiche dans la console :
+// installHook.js:1 Statut de reponse : undefined
+// overrideMethod	@	installHook.js:1
+// recupererPays	@	script.js:36
+// afficherPays	@	script.js:55
+// chargerTout2	@	script.js:87
+// (anonymous)	@	script.js:94
+
+// Tous les pays s'affichent en rouge pays introuvable parce que le script s'exécute sans attendre la réponse de l'API, on a donc juste une promesse qui est en pending.
+
+// 2. Si je retire la vérification de response.ok l'Atlantide s'affiche quand même en pays non trouvé. Donc pour moi c'est suffisant pour l'utilisateur. Il y a peut-être une erreur dans mon script sur la gestion d'erreur ^^
+
+// 3. Bonne question ... Aucune idée. Le finally s'exécute tout le temps (après le try ou le catc(h mais dans tous les cas il s'exécute, il me semble non ?
